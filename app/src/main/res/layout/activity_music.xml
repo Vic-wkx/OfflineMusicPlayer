@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.my.music.music.MusicViewModel" />
+
+        <import type="com.my.music.repository.MusicRepository" />
+
+        <import type="com.my.music.repository.PlayState" />
+
+        <variable
+            name="musicViewModel"
+            type="com.my.music.music.MusicViewModel" />
+        <!-- TODO: To figure out why it can't use the static field directly, it reported  Could not find accessor -->
+        <!--  These links don't work for me.-->
+        <!--   https://stackoverflow.com/questions/50293547/how-to-call-static-method-with-data-binding-->
+        <!--   https://stackoverflow.com/questions/32683129/android-databinding-error-could-not-find-accessor-->
+        <variable
+            name="musicRepository"
+            type="com.my.music.repository.MusicRepository" />
+
+        <variable
+            name="playState"
+            type="com.my.music.repository.PlayState" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".music.MusicActivity">
+
+        <View
+            android:id="@+id/vBgToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:background="@color/deep_grey"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/deep_grey"
+            app:layout_constraintTop_toBottomOf="@id/vBgToolbar"
+            app:titleTextColor="@color/white"
+            tools:menu="@menu/menu_main" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMusic"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layoutManager=".internal.WrapContentLinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/layoutBottomPlayer"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:setAdapter="@{musicViewModel.musicAdapter}"
+            tools:listitem="@layout/item_music" />
+
+        <Button
+            android:id="@+id/btnScan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="scanMusic"
+            android:text="Scan"
+            android:visibility="@{musicRepository.musicList.isEmpty()? View.VISIBLE: View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutBottomPlayer"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/green"
+            android:onClick="navigateToPlayerActivity"
+            android:visibility="@{musicRepository.musicList.isEmpty()? View.GONE: View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/ivMusic"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_music"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{musicRepository.musicList.isEmpty() ? &quot;&quot; : musicRepository.musicList[playState.playingIndex].title}"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivMusic"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Title of Music" />
+
+            <Button
+                android:id="@+id/btnPlayOrPause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:onClick="playOrPause"
+                android:text="@{playState.isPlaying()? &quot;Pause&quot; : &quot;Play&quot;}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Play" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

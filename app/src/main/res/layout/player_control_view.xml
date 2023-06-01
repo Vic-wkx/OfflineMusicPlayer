@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?><!--TODO: Figure out how to use DataBinding here. Refer to https://github.com/google/ExoPlayer/issues/5417 -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dragon_exo_control_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/green"
+    tools:context=".player.PlayerActivity">
+
+    <ImageView
+        android:id="@+id/ivCD"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="56dp"
+        android:contentDescription="CD"
+        android:src="@mipmap/ic_cd"
+        app:layout_constraintBottom_toTopOf="@id/exo_position"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Can't use app:layout_constraintBottom_toTopOf="@id/exo_progress_placeholder" since the placeholder will be gone I guess. -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="48dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/exo_position"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Title of Song" />
+
+    <View
+        android:id="@id/exo_progress_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@id/exo_position" />
+
+    <TextView
+        android:id="@id/exo_position"
+        style="@style/ExoStyledControls.TimeText.Position"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="@dimen/exo_styled_progress_layout_height"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@id/exo_play_pause"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@id/exo_duration"
+        style="@style/ExoStyledControls.TimeText.Duration"
+        android:layout_marginTop="@dimen/exo_styled_progress_layout_height"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@id/exo_play_pause"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageButton
+        android:id="@id/exo_shuffle"
+        style="@style/ExoStyledControls.Button.Bottom.Shuffle"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="@dimen/exo_styled_progress_layout_height"
+        android:layout_marginBottom="36dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/exo_prev"
+        style="@style/ExoStyledControls.Button.Center.Previous"
+        android:layout_marginTop="@dimen/exo_styled_progress_layout_height"
+        android:layout_marginBottom="36dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/exo_play_pause"
+        app:layout_constraintStart_toEndOf="@id/exo_shuffle" />
+
+    <ImageButton
+        android:id="@+id/exo_play_pause"
+        style="@style/ExoStyledControls.Button.Center.PlayPause"
+        android:layout_marginTop="@dimen/exo_styled_progress_layout_height"
+        android:layout_marginBottom="36dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/exo_next"
+        app:layout_constraintStart_toEndOf="@id/exo_prev" />
+
+    <ImageButton
+        android:id="@id/exo_next"
+        style="@style/ExoStyledControls.Button.Center.Next"
+        android:layout_marginTop="@dimen/exo_styled_progress_layout_height"
+        android:layout_marginBottom="36dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/exo_repeat_toggle"
+        app:layout_constraintStart_toEndOf="@id/exo_play_pause" />
+
+    <ImageButton
+        android:id="@id/exo_repeat_toggle"
+        style="@style/ExoStyledControls.Button.Bottom.RepeatToggle"
+        android:layout_marginTop="@dimen/exo_styled_progress_layout_height"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="36dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
